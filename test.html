@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<html>
+<head> 
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM | Employee</title>
+    <link rel="stylesheet" href="js/datatables/datatables.css" type="text/css"/>
+   <style type="text/css">
+     .modal { 
+      position: fixed; top:8%; left:8%;
+     }
+     .required{
+	  color:red;
+	  }
+	  .type{
+	  color:red;
+	  }
+	             
+    #comment_table td span, #comment_table th span {
+        cursor : pointer;
+     }
+   </style>
+   <s:include value="css-js.jsp"></s:include>
+</head>
+<body>
+	 <div id="wrapper">
+	   <s:include value="sidebar.jsp"></s:include>
+		<div id="page-wrapper" class="gray-bg">
+		 <s:include value="header.jsp"></s:include>
+          <div class="row border-bottom">
+          </div>
+
+    	<div class="row wrapper border-bottom white-bg page-heading">
+	    	<div class="col-lg-10">
+		   	 <h2>Employee</h2>
+			 <ol class="breadcrumb">
+				<li>
+					<a href="Dashboard">Home</a>
+				</li>
+				<li>
+					<a>Administration</a>
+				</li>
+				<li>
+					<a>Employee</a>
+				</li>
+				<li class="active">
+					<strong>Add Employee</strong>
+				</li>
+			</ol>
+		</div>
+		<div class="col-lg-2">
+
+		</div>
+	</div>
+
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Add Employee</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link">
+								<i class="fa fa-chevron-up"></i>
+							</a>
+							<a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
+								<i class="fa fa-wrench"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<a href="viewemp_page24">View Employee</a>
+								</li>
+
+							</ul>
+
+						</div>
+					</div>
+					
+					<div class="ibox-content">
+   					   <form class="form-horizontal" name="employee_form" id="employee_form">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="150" autocomplete="off"  id="employee_name" name="employee_name" data-required="" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="text"  autocomplete="off" autocomplete="off" id="employee_email" name="employee_email"  data-type="email" class="form-control">    
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Designation</label>
+                                        <div class="col-sm-9">
+                                            <select name="emp_desg" id="emp_desg"  data-required="" class="form-control">
+                                            </select>  
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                   
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Date Of Birth</label>
+                                        <div class="col-sm-9">
+                                            <input readonly="true" id="employee_dob" name="employee_dob" 
+                                             data-required=""  class="form-control datetxt text-right">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Date Of Join</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" readonly="true" id="date_of_join" data-required=""
+                                             name="date_of_join"  class="form-control datetxt text-right">
+                                        </div>
+                                    </div>
+
+
+									<div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">H.Q.</label>
+                                        <div class="col-sm-9">
+                                            <select name="headquarter" id="headquarter"  data-required="" class="form-control">
+                                              <option value="test">Test data</option>
+                                            </select> 
+                                      
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-12"> 
+                                   
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Office Cnt No</label>
+                                        <div class="col-sm-9">
+                                         <input type="text" autocomplete="off"  maxlength="10"  id="office_cnt_no" name="office_cnt_no" 
+                                           class="form-control numeric text-right">  
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Cnt No</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" autocomplete="off"  maxlength="10"  id="contact_no" name="contact_no" 
+                                           class="form-control numeric text-right">  
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <label class="radio-inline">
+                                                <input checked=""  name="active_flag" type="radio" value="Active">
+                                                Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input  name="active_flag" type="radio" value="Inactive">
+                                                Inactive 
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                  
+                                </div>
+                            </div>
+                            
+  						<div class="form-group">
+                            <div class="col-lg-12">
+								<div class="col-lg-4">
+                                        <label class="col-sm-3 control-label">Working State</label>
+                                        <div class="col-sm-9">
+                                            <select name="working_state" id="working_state"  class="form-control">
+                                              <option value="test">Test data</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                         </div>
+
+                        <div class="form-group">
+
+                            <div class="col-lg-12">
+                                <div class="panel blank-panel">
+
+                                    <div class="panel-heading">
+                                        <!--  <div class="panel-title m-b-md"><h4>Blank Panel with text tabs</h4></div>-->
+                                        <div class="panel-options">
+
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a data-toggle="tab" href="#tab-0">Personal Info</a></li>
+                                                <li ><a data-toggle="tab" href="#tab-1">Permanent Address</a></li>
+                                                <li class=""><a data-toggle="tab" href="#tab-2">Payroll Info</a></li>
+                                                <li class=""><a data-toggle="tab" href="#tab-3">KYC Details</a></li>
+                                                <li class=""><a data-toggle="tab" href="#tab-4">File Upload</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="tab-content">
+                                           <div id="tab-0" class="tab-pane active">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Father Name</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_fathername"  maxlength="150"   name="emp_fathername" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Mother Name</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="150"  id="emp_mothername" name="emp_mothername" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Martial Status</label>
+                                                            <div class="col-sm-9">
+<!--                                                                 <input type="text" maxlength="150"  id="emp_martailstatus" name="emp_martailstatus"  class="form-control"> -->
+                                                                <select class="form-control" id="emp_martailstatus" name="emp_martailstatus">
+                                                                  <option value="">Select Martial Status</option>
+                                                                  <option value="1">Married</option>
+                                                                  <option value="2">UnMarried</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Blood Group</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="blood_group" id="blood_group"  class="form-control">
+				                                                <option value="">Select Blood Group</option>
+				                                                <option value="O+">O+</option>
+				                                                <option value="O-">O-</option>
+				                                                <option value="A+">A+</option>
+				                                                <option value="A-">A-</option>
+				                                                <option value="B+">B+</option>
+				                                                <option value="B-">B-</option>
+				                                                <option value="AB+">AB+</option>
+				                                                <option value="AB-">AB-</option>
+				                                            </select>  
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Gender</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="emp_gender" id="emp_gender"  class="form-control">
+                                                                 <option value="">Select Gender</option>
+                                                                 <option value="1">Male</option>
+                                                                 <option value="2">Female</option>
+                                                                 <option value="3">Others</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div id="tab-1" class="tab-pane ">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Add-1</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="p_address_1"  maxlength="150"   name="p_address_1" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Add-2</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="150"  id="p_address_2" name="p_address_2" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Add-3</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="150"  id="p_address_3" name="p_address_3"  class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Country</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="p_country_mst_fk" id="p_country_mst_fk"  class="form-control" onchange="mycountry(this)"> 
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">State</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="p_state_mst_fk" id="p_state_mst_fk"  class="form-control" onchange="mystate(this)">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">District</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="p_district_mst_fk" id="p_district_mst_fk"  class="form-control" onchange="mydist(this)">
+                                                                </select>
+                                                             
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <div class="col-lg-12">        
+                                                      
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Zip Code</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="p_zip_code"  maxlength="6"   name="p_zip_code" class="form-control numeric text-right">
+                                                                
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="tab-2" class="tab-pane">
+                                                <div class="form-group">
+
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Select Payroll</label>
+                                                            <div class="col-sm-9">
+                                                                <select  class="form-control" name="emp_payroll" id="emp_payroll">
+                                                                  <option value="">Select Payroll</option>
+                                                                  <option value="1">Payroll</option>
+                                                                  <option value="2">Non-Payroll</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Salary</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="150" autocomplete="off" id="emp_sal" name="emp_sal" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                         <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Mobile Alw</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="150" autocomplete="off" id="emp_mob_allow" 
+                                                                name="emp_mob_allow"  class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                
+                                                <div class="hr-line-dashed"></div>
+<!--                                                 <pre></pre> -->
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                       
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Local Alw</label>
+                                                            <div class="col-sm-9">
+                                                            <div class="input-group ">
+                                                                <input type="text" id="emp_local_allow"  autocomplete="off" 
+                                                                name="emp_local_allow" class="form-control numeric text-right">
+                                                              </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Ex ALw</label>
+                                                            <div class="col-sm-9">
+                                                            <div class="input-group">
+					                                            
+                                                                <input type="text" id="emp_ex_allow"   maxlength="8" autocomplete="off" 
+                                                                name="emp_ex_allow" class="form-control numeric text-right">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Night Alw</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="100" autocomplete="off" id="emp_night_allow" 
+                                                                name="emp_night_allow" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                               <div class="form-group" id="payroll_div">
+                                                    <div class="col-lg-12">
+                                                       
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">PF No</label>
+                                                            <div class="col-sm-9">
+                                                            <div class="input-group ">
+                                                                <input type="text" id="emp_pfno" maxlength="20" autocomplete="off" 
+                                                                name="emp_pfno" class="form-control">
+                                                              </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">UAN No</label>
+                                                            <div class="col-sm-9">
+                                                            <div class="input-group">
+					                                            
+                                                                <input type="text" id="emp_uan_no"   maxlength="100" autocomplete="off" 
+                                                                name="emp_uan_no" class="form-control ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">ESIC No</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="20" autocomplete="off" id="emp_esic_no" 
+                                                                name="emp_esic_no" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+												<div class="hr-line-dashed"></div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Select Traveling Alw</label>
+                                                            <div class="col-sm-9">
+                                                                <select name="travling_alw" id="travling_alw" class="form-control">
+																	<option value="">Select Traveling Alw</option>
+																	<option value="1">Actual</option>
+																	<option value="2">Fixed</option>
+																	<option value="3">Both</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Per KM</label>
+                                                            <div class="col-sm-9">
+																<input type="text" maxlength="100" autocomplete="off" 
+																id="travel_allow_amt" name="travel_allow_amt" class="form-control">			
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div id="tab-3" class="tab-pane">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Pan No</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_pancard_no" name="emp_pancard_no" maxlength="25" autocomplete="off" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">DL No</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_dl_no" name="emp_dl_no" maxlength="25" autocomplete="off" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Adhar No</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" maxlength="25" autocomplete="off" id="emp_adhar_no" name="emp_adhar_no"  class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <pre><h8>Bank Details....</h8></pre>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                       <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Bank Ac/No</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_bank_acno" name="emp_bank_acno" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Bank Name</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_bank_name" name="emp_bank_name" maxlength="25"
+                                                                 autocomplete="off" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Bank Branch</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_bank_branch" name="emp_bank_branch" 
+                                                                maxlength="25" autocomplete="off" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                               
+                                               <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                     <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">IFSC Code</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_ifsc_code" name="emp_ifsc_code" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-sm-3 control-label">Name In Bank</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" id="emp_name_in_bank" name="emp_name_in_bank" maxlength="25"
+                                                                 autocomplete="off" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div id="tab-4" class="tab-pane">
+                                              <div class="form-group">
+                                               	<div class="col-lg-12">
+                                                <div class="col-lg-12">
+                                                  <table id="comment_table" align="center"  cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover col-sm-7" >
+                                                     <tr role="row" class="heading">
+                                                        <th style="width:140px" align="center">Comments</th>
+                                                        <th style="width:70px" align="center">File</th> 
+                                                        <th style="width: 10px" align="center"><span onclick="comment_add_row();">+</span></th>
+                                                     </tr>
+                                                    <tr>
+                                                   
+                                                        <td style="width:140px">
+                                                         <textarea rows="2"  id="emp_comments" name="emp_comments"  class="form-control  product_quentity1"></textarea>
+                                                        </td>
+                                                    
+                                                          <td style="width:70px">
+                                                           <input type="file"  name="fileUpload" id="fileUpload"  class="form-control filecomment">
+                                                          </td>
+                                                          
+                                                          <td style="display:none;">
+                                                           <input type="hidden"  name="hfilename" id="hfilename" value=""  class="form-control">
+                                                          </td>
+                                                        <td align="center" style="width:10px"><span onclick="comment_remove_row(this);"> X </span></td> 
+                                                    </tr>
+                                                  </table>
+											   </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-offset-10">
+<!--                                     <a class="btn btn-primary" id="emp_save">Submit</a> -->
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-white" id="cancelbtn" type="button" onclick="clearForm('#employee_form')">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+
+					<div class="alert alert-danger alert-dismissable hidden" id="error">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã</button>
+						Data could not be saved. Please, try again.
+					</div>
+					<div class="alert alert-danger alert-dismissable hidden" id="iderror">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã</button>
+						entity Id Already Exist. Please, try again.
+					</div>
+					<div class="alert alert-danger alert-dismissable hidden" id="fillerror">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã</button>
+						Please Fill Mandatory Fields. Please, try again.
+					</div>
+					<div class="alert alert-success hidden" id="success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã</button>
+						Data has been Successfully Saved. 
+					</div>
+                    
+				  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+           
+        <div class="footer">
+          <div>
+             <strong>Copyright</strong> CRM &copy; 2015
+          </div>
+         </div>
+                <!-- END header -->
+      </div>
+     </div>
+
+        <div class="modal-backdrop" id="test_loading"  style="display: none;">
+            <div   class="loading-spinner" style="width: 200px; margin-left: -100px; ">
+                <div id="test_loading1" class="progress progress-striped active">
+                    <div class="progress-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+      
+     <table class="table-striped table-bordered table-hover">
+            <tr id="hid_row_comment_tbl" style="display:none;">
+                 <td style="width:140px">
+                   <textarea rows="2"  id="emp_comments" name="emp_comments"  class="form-control  product_quentity1"></textarea>
+                  </td>
+              
+                    <td style="width:70px">
+                     <input type="file"  name="fileUpload" id="fileUpload"  class="form-control filecomment">
+                    </td>
+                    
+                    <td style="display:none;">
+                     <input type="hidden"  name="hfilename" id="hfilename" value=""  class="form-control">
+                    </td>
+                  <td align="center" style="width:10px"><span onclick="comment_remove_row(this);"> X </span></td> 
+             </tr>
+        </table>  
+     
+	<script src="js/datatables/jquery.dataTables.min.js"></script>
+  	<script src="js/parsley/parsley.extend.js"></script>
+  	<script src="js/parsley/parsley.min.js"></script>
+    <script>
+   
+    $(document).ready(function() {
+		  country_name();
+		  desg_name();
+		  grade_name();
+		  working_state();
+		  headquarter_name();
+		  $('#payroll_div').hide();
+     });
+    
+    $('#emp_payroll').on('change', function() {
+   		var val = this.value;
+ 		if(val=="1"){
+ 			$('#payroll_div').show();
+ 		}else{
+ 			$('#payroll_div').hide();
+ 		}
+ 		
+    });
+    
+   function working_state(){
+    	$.ajax({
+			  type: "POST",
+			  url: "emp_working_state",
+			  success: function(data2){
+				var obj = jQuery.parseJSON(data2);
+				$("#working_state").empty();
+				var option1 = $('<option></option>').attr("value", "").text("Select Working State");
+			   $("#working_state").append(option1);
+			   $.each(obj["aaData"], function(i,row) {
+			       var STATE_MST_PK = row['STATE_MST_PK'];
+				   var STATE_NAME=row["STATE_NAME"];
+			       var option = $('<option></option>').attr("value", STATE_MST_PK).text(STATE_NAME);
+		          $("#working_state").append(option);
+			    });
+		     }
+	 	 });
+    }
+    
+    function comment_add_row() {
+        var hid_row = document.getElementById('hid_row_comment_tbl').innerHTML;
+        var tr = document.createElement('tr');
+        tr.innerHTML = hid_row;
+        document.getElementById('comment_table').getElementsByTagName('tbody')[0].appendChild(tr);
+    	$('.comm_datetxt').datepicker({
+            format: "dd-mm-yyyy",
+            autoclose: true,
+            endDate: today,
+        });  
+    }
+    
+    function comment_remove_row(ele) {
+        var pr = ele.parentElement.parentElement;
+        document.getElementById('comment_table').getElementsByTagName('tbody')[0].removeChild(pr);
+      
+    }
+    
+    
+    $('#comment_table .filecomment').live('change', function (i, el) {
+ 	   var tbl = document.getElementById('comment_table');
+        var total_rows = tbl.rows.length;
+        var total_columns = tbl.rows[0].cells.length;
+        var row_num = $(this).closest("tr")[0].rowIndex;
+        //var filename = this.value;
+        var filename = $(this).val().split('/').pop().split('\\').pop();
+        tbl.rows[row_num].cells[2].getElementsByTagName("input")[0].value=filename;    
+	});
+    
+	function desg_name(){
+		$.ajax({
+			  type: "POST",
+			  url: "desg_name",
+			  success: function(data2){
+				var obj = jQuery.parseJSON(data2);
+				$("#emp_desg").empty();
+				var option1 = $('<option></option>').attr("value", "").text("Select Designation ");
+			   $("#emp_desg").append(option1);
+			   $.each(obj["aaData"], function(i,row) {
+			       var DESG_MST_PK = row['DESG_MST_PK'];
+				   var DESG_NAME=row["DESG_NAME"];
+				   
+			       var option = $('<option></option>').attr("value", DESG_MST_PK).text(DESG_NAME);
+		          $("#emp_desg").append(option);
+			    });
+		     }
+	 	 });
+	}
+		
+	function grade_name(){
+		$.ajax({
+			  type: "POST",
+			  url: "grade_name",
+			  success: function(data2){
+				var obj = jQuery.parseJSON(data2);
+				$("#emp_grade").empty();
+				var option1 = $('<option></option>').attr("value", "").text("Select Grade");
+			   $("#emp_grade").append(option1);
+			   $.each(obj["aaData"], function(i,row) {
+			       var GRADE_MST_PK = row['GRADE_MST_PK'];
+				   var GRADE_NAME=row["GRADE_NAME"];
+			       var option = $('<option></option>').attr("value", GRADE_MST_PK).text(GRADE_NAME);
+		          $("#emp_grade").append(option);
+			    });
+		     }
+	 	 });
+	}
+	
+	function headquarter_name(){
+		$.ajax({
+			   type: "POST",
+			   url: "headquarterdrp",
+			   success: function(data2){
+					var obj = jQuery.parseJSON(data2);
+					$("#headquarter").empty();
+					var option1 = $('<option></option>').attr("value", "Select Country").text("Select HeadQuarter");
+				    $("#headquarter").append(option1);
+				    $.each(obj["aaData"], function(i,row) {
+				      var HQ_ID=row['HQ_ID'];
+					   var HQ_NAME=row["HQ_NAME"];
+				       var option = $('<option></option>').attr("value", HQ_ID).text(HQ_NAME);
+			          $("#headquarter").append(option);
+				   });
+			     }
+		 	 });
+	  }
+ 
+
+    
+   // $('#emp_save').click(function(){
+    $("form#employee_form").submit(function(event){
+    
+		   var subflag = $('#employee_form').parsley().validate();
+		   event.preventDefault();
+      	    var formData =  new FormData($(this)[0]);
+			if(subflag) {			
+		 		 var r = confirm("Are you sure you want to Save the record?");
+		 	      if (r == true) {
+		 	          txt = "You pressed OK!";
+		 	          console.log("confrem txt"+txt);
+		 	      } else {
+		 	          txt = "You pressed Cancel!";
+		 	          console.log("confrem txt"+txt);
+		 	          return;
+		 	      }
+		 	     
+		 	     $.ajax({
+		 	    	  type:"POST",
+		 	    	  url:"save_emp23",
+		 	    	  data:formData,
+		 	    	  async: false,
+		 	    	  cache: false,
+		 	    	  contentType: false,
+		 	    	  processData: false,
+		 	    	  success: function(data) {
+		 	    		 var obj = jQuery.parseJSON(data);
+		 	    		 alert(obj.status);
+		 	    		 if(obj.status=="Data Saved" || obj.status=="Data Updated"){
+		 	    			 $('#employee_form')[0].reset(); 
+		 	    	       }
+		 	    	   }		 
+		 	       });
+			}
+    });
+    
+    $('#employee_dob').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+    	var start_date;
+        start_date = ev.date;
+        setStartDueDate(start_date);
+        ev.stopPropagation();
+        start_date = ev.date;
+        start_date = new Date(ev.date.valueOf());
+        start_date.setDate(start_date.getDate(new Date(ev.date.valueOf())));
+        $('#date_of_join').datepicker('setStartDate', start_date);
+        $('#date_of_join').datepicker('setDate', start_date);
+    });
+    
+    function setStartDueDate(startdate) {
+        var invoice_date = startdate;
+        var due_date = startdate;
+        var futureDate = getFutureDate(due_date);
+        $('.datetxt').datepicker({
+            format: "dd-mm-yyyy",
+            autoclose: true,
+        });   
+    }
+    
+    function getFutureDate(dateObj) {
+        //dateObj.setDate(dateObj.getDate() + numDays);
+        dateObj.setFullYear(dateObj.getFullYear()+18);
+        return dateObj;
+    }
+    
+	
+
+	function country_name(){
+		$.ajax({
+			   type: "POST",
+			   url: "country_name6",
+			   success: function(data2){
+					var obj = jQuery.parseJSON(data2);
+					$("#p_country_mst_fk").empty();
+					var option1 = $('<option></option>').attr("value", "Select Country").text("Select Country");
+				   $("#p_country_mst_fk").append(option1);
+				   $.each(obj["aaData"], function(i,row) {
+				      var COUNTRY_MST_PK=row['COUNTRY_MST_PK'];
+					   var country_name=row["COUNTRY_NAME"];
+				       var option = $('<option></option>').attr("value", COUNTRY_MST_PK).text(country_name);
+			          $("#p_country_mst_fk").append(option);
+				   });
+			     }
+		 	 });
+	  }
+   
+	function mycountry(country){
+		var val = country.value;
+		state_name(val);
+	}
+
+	  
+	function state_name(val){
+		 $.ajax({
+			  type: "POST",
+			  url: "state_name7?id="+val,
+			  success: function(data2){
+				var obj = jQuery.parseJSON(data2);
+				$("#p_state_mst_fk").empty();
+				var option1 = $('<option></option>').attr("value", "Select State").text("Select State");
+				$("#p_state_mst_fk").append(option1);
+			   $.each(obj["aaData"], function(i,row) {
+				   var STATE_MST_PK=row["STATE_MST_PK"];
+				   var state_name=row["STATE_NAME"];
+			     
+			       var option = $('<option></option>').attr("value", STATE_MST_PK).text(state_name);
+		          $("#p_state_mst_fk").append(option);
+			    });
+		     }
+	  });
+	} 
+
+	function mystate(state){
+		var val = state.value;
+		dist_name(val);
+	}
+	
+	function dist_name(val){
+		 $.ajax({
+			  type: "POST",
+			  url: "dist_name8?id="+val,
+			  success: function(data2){
+				var obj = jQuery.parseJSON(data2);
+				$("#p_district_mst_fk").empty();
+				var option1 = $('<option></option>').attr("value", "Select Dist").text("Select Dist");
+				$("#p_district_mst_fk").append(option1);
+			    $.each(obj["aaData"], function(i,row) {
+			    	var DISTRICT_MST_PK=row["DISTRICT_MST_PK"];
+			    	var dist_name=row["DISTRICT_NAME"];
+			        var option = $('<option></option>').attr("value", DISTRICT_MST_PK).text(dist_name);
+		            $("#p_district_mst_fk").append(option);
+			    });
+		     }
+	   });
+	} 
+	
+</script>
+</body>
+</html>
+
